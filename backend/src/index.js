@@ -7,6 +7,7 @@ import User from "./models/user.model.js";
 import { connectDB } from "./lib/db.js";
 import dns from "dns";
 import cors from "cors";
+import job from "./lib/cron.js";
 
 dns.setServers(["0.0.0.0", "8.8.8.8"]);
 
