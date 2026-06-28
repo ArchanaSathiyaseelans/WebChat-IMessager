@@ -9,6 +9,7 @@ import dns from "dns";
 import cors from "cors";
 import job from "./lib/cron.js";
 import clerkWebhook from "./webhooks/clerk.webhook.js";
+import authRoutes from "./routes/auth.route.js";
 
 dns.setServers(["0.0.0.0", "8.8.8.8"]);
 
@@ -33,6 +34,8 @@ app.use(clerkMiddleware());
 app.get("/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
+
+app.use("/api/auth", authRoutes);
 
 // if the public directory exists, serve the static files
 // this is for the production build
