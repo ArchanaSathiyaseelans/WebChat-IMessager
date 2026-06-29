@@ -1,20 +1,24 @@
 import express from "express";
+import cors from "cors";
+
 import "dotenv/config";
+
 import fs from "fs";
 import path from "path";
+import dns from "dns";
+
 import { clerkMiddleware } from "@clerk/express";
+
 import User from "./models/user.model.js";
 import { connectDB } from "./lib/db.js";
-import dns from "dns";
-import cors from "cors";
 import job from "./lib/cron.js";
+
 import clerkWebhook from "./webhooks/clerk.webhook.js";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
+import { app, server } from "./lib/socket.js";
 
 dns.setServers(["0.0.0.0", "8.8.8.8"]);
-
-const app = express();
 const PORT = process.env.PORT;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
@@ -29,7 +33,6 @@ app.use(
 
 app.use(express.json());
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
-app.use(cors());
 app.use(clerkMiddleware());
 
 app.get("/health", (req, res) => {
@@ -49,7 +52,7 @@ if (fs.existsSync(publicDir)) {
   });
 }
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   connectDB();
   console.log("Server is up and running on PORT:", PORT);
 
