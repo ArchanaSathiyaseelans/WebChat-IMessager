@@ -41,6 +41,6 @@ In Vs Code
    npm run dev <br>
    add all environmental variables in <b>.env</b> file <br>
 <br> <br>
-<b> Creating Docker files for Image Containerization </b>
+<b> Creating Docker files for Image Containerization </b> <br>
 <b>Deploy both Frontend and Backend file separately on Rnder.  </b>  
 
